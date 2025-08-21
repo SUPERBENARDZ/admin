@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management - AgribaseGroup Admin</title>
+    <meta name="description" content="Manage products for AgribaseGroup e-commerce website.">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/admin-style.css">
+    <link rel="stylesheet" href="css/admin-responsive.css">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container">
+            <div class="admin-logo">
+                <img src="../images/logo.png" alt="AgribaseGroup Logo">
+            </div>
+            
+            <div class="admin-user">
+                <div class="admin-user-info">
+                    <h4>Admin User</h4>
+                    <p>Administrator</p>
+                </div>
+                
+                <div class="admin-user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Admin Container -->
+    <div class="admin-container">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <ul class="admin-menu">
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="products.html" class="active">
+                        <i class="fas fa-box"></i> Products
+                    </a>
+                </li>
+                <li>
+                    <a href="orders.html">
+                        <i class="fas fa-shopping-cart"></i> Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="agents.html">
+                        <i class="fas fa-users"></i> Agents
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+                <li>
+                    <button type="button" class="logout-btn" id="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </li>
+            </ul>
+        </aside>
+        
+        <!-- Admin Content -->
+        <main class="admin-content">
+            <div class="admin-title">
+                <h1>Product Management</h1>
+                <p>Add, edit, and manage products</p>
+            </div>
+            
+            <!-- Product Stats -->
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <h3>Total Products</h3>
+                        <div class="stat-card-icon icon-products">
+                            <i class="fas fa-box"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">14</div>
+                    <div class="stat-card-label">Products in inventory</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <h3>Categories</h3>
+                        <div class="stat-card-icon" style="background-color: #17a2b8;">
+                            <i class="fas fa-tags"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">4</div>
+                    <div class="stat-card-label">Product categories</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <h3>Top Selling</h3>
+                        <div class="stat-card-icon" style="background-color: #fd7e14;">
+                            <i class="fas fa-chart-bar"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">Verno Fertilizer</div>
+                    <div class="stat-card-label">Most popular product</div>
+                </div>
+            </div>
+            
+            <!-- Product Actions -->
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h2>Product Actions</h2>
+                </div>
+                
+                <div class="admin-card-body">
+                    <div class="action-buttons" style="margin-bottom: 20px;">
+                        <button class="btn" id="add-product-btn">
+                            <i class="fas fa-plus"></i> Add New Product
+                        </button>
+                        <button class="btn" id="import-products-btn">
+                            <i class="fas fa-file-import"></i> Import Products
+                        </button>
+                        <button class="btn" id="export-products-btn">
+                            <i class="fas fa-file-export"></i> Export Products
+                        </button>
+                    </div>
+                    
+                    <div class="filter-options">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="category-filter">Filter by Category</label>
+                                <select id="category-filter" class="form-control">
+                                    <option value="">All Categories</option>
+                                    <option value="fertilizers">Fertilizers/Adjuvants</option>
+                                    <option value="fungicides">Fungicides</option>
+                                    <option value="herbicides">Herbicides</option>
+                                    <option value="insecticides">Insecticides</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="search-products">Search Products</label>
+                                <input type="text" id="search-products" class="form-control" placeholder="Search by name, SKU...">
+                            </div>
+                            
+                            <div class="form-group" style="align-self: flex-end;">
+                                <button class="btn" id="apply-filters-btn">Apply Filters</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Products List -->
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h2>Products List</h2>
+                    <div>
+                        <select id="view-mode" class="form-control">
+                            <option value="table">Table View</option>
+                            <option value="grid">Grid View</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="admin-card-body">
+                    <!-- Table View -->
+                    <div id="table-view">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Category</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div class="product-image-preview">
+                                            <img src="../images/products/verno-fertilizer.jpg" alt="Verno Fertilizer">
+                                        </div>
+                                    </td>
+                                    <td>Verno Fertilizer</td>
+                                    <td>Fertilizers/Adjuvants</td>
+                                    <td>KSh 250 - KSh 14,000</td>
+                                    <td>In Stock</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-view" data-product-id="verno-fertilizer">View</button>
+                                            <button class="btn btn-sm btn-edit" data-product-id="verno-fertilizer">Edit</button>
+                                            <button class="btn btn-sm btn-delete" data-product-id="verno-fertilizer">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="product-image-preview">
+                                            <img src="../images/products/verno-amplifaya.jpg" alt="Verno Amplifaya">
+                                        </div>
+                                    </td>
+                                    <td>Verno Amplifaya</td>
+                                    <td>Fertilizers/Adjuvants</td>
+                                    <td>KSh 250 - KSh 11,000</td>
+                                    <td>In Stock</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-view" data-product-id="verno-amplifaya">View</button>
+                                            <button class="btn btn-sm btn-edit" data-product-id="verno-amplifaya">Edit</button>
+                                            <button class="btn btn-sm btn-delete" data-product-id="verno-amplifaya">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="product-image-preview">
+                                            <img src="../images/products/air-chopper.jpg" alt="Air Chopper 7.5sc">
+                                        </div>
+                                    </td>
+                                    <td>Air Chopper 7.5sc</td>
+                                    <td>Insecticides</td>
+                                    <td>KSh 280 - KSh 58,000</td>
+                                    <td>In Stock</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-view" data-product-id="air-chopper">View</button>
+                                            <button class="btn btn-sm btn-edit" data-product-id="air-chopper">Edit</button>
+                                            <button class="btn btn-sm btn-delete" data-product-id="air-chopper">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="product-image-preview">
+                                            <img src="../images/products/pronative-430c.jpg" alt="Pronative 430C">
+                                        </div>
+                                    </td>
+                                    <td>Pronative 430C</td>
+                                    <td>Fungicides</td>
+                                    <td>KSh 220 - KSh 38,000</td>
+                                    <td>In Stock</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-view" data-product-id="pronative-430c">View</button>
+                                            <button class="btn btn-sm btn-edit" data-product-id="pronative-430c">Edit</button>
+                                            <button class="btn btn-sm btn-delete" data-product-id="pronative-430c">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="product-image-preview">
+                                            <img src="../images/products/nordox-express.jpg" alt="Nordox Express 75WG">
+                                        </div>
+                                    </td>
+                                    <td>Nordox Express 75WG</td>
+                                    <td>Fungicides</td>
+                                    <td>KSh 350 - KSh 41,000</td>
+                                    <td>In Stock</td>
+                                    <td>
+                                        <div class="action-buttons">
+                                            <button class="btn btn-sm btn-view" data-product-id="nordox-express">View</button>
+                                            <button class="btn btn-sm btn-edit" data-product-id="nordox-express">Edit</button>
+                                            <button class="btn btn-sm btn-delete" data-product-id="nordox-express">Delete</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Grid View -->
+                    <div id="grid-view" style="display: none;">
+                        <div class="product-grid">
+                            <!-- Product 1 -->
+                            <div class="product-card">
+                                <div class="product-card-image">
+                                    <img src="../images/products/verno-fertilizer.jpg" alt="Verno Fertilizer">
+                                </div>
+                                <div class="product-card-content">
+                                    <h3 class="product-card-title">Verno Fertilizer</h3>
+                                    <div class="product-card-price">KSh 250 - KSh 14,000</div>
+                                    <div class="product-card-category">Fertilizers/Adjuvants</div>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-product-id="verno-fertilizer">View</button>
+                                        <button class="btn btn-sm btn-edit" data-product-id="verno-fertilizer">Edit</button>
+                                        <button class="btn btn-sm btn-delete" data-product-id="verno-fertilizer">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Product 2 -->
+                            <div class="product-card">
+                                <div class="product-card-image">
+                                    <img src="../images/products/verno-amplifaya.jpg" alt="Verno Amplifaya">
+                                </div>
+                                <div class="product-card-content">
+                                    <h3 class="product-card-title">Verno Amplifaya</h3>
+                                    <div class="product-card-price">KSh 250 - KSh 11,000</div>
+                                    <div class="product-card-category">Fertilizers/Adjuvants</div>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-product-id="verno-amplifaya">View</button>
+                                        <button class="btn btn-sm btn-edit" data-product-id="verno-amplifaya">Edit</button>
+                                        <button class="btn btn-sm btn-delete" data-product-id="verno-amplifaya">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Product 3 -->
+                            <div class="product-card">
+                                <div class="product-card-image">
+                                    <img src="../images/products/air-chopper.jpg" alt="Air Chopper 7.5sc">
+                                </div>
+                                <div class="product-card-content">
+                                    <h3 class="product-card-title">Air Chopper 7.5sc</h3>
+                                    <div class="product-card-price">KSh 280 - KSh 58,000</div>
+                                    <div class="product-card-category">Insecticides</div>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-product-id="air-chopper">View</button>
+                                        <button class="btn btn-sm btn-edit" data-product-id="air-chopper">Edit</button>
+                                        <button class="btn btn-sm btn-delete" data-product-id="air-chopper">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Product 4 -->
+                            <div class="product-card">
+                                <div class="product-card-image">
+                                    <img src="../images/products/pronative-430c.jpg" alt="Pronative 430C">
+                                </div>
+                                <div class="product-card-content">
+                                    <h3 class="product-card-title">Pronative 430C</h3>
+                                    <div class="product-card-price">KSh 220 - KSh 38,000</div>
+                                    <div class="product-card-category">Fungicides</div>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-product-id="pronative-430c">View</button>
+                                        <button class="btn btn-sm btn-edit" data-product-id="pronative-430c">Edit</button>
+                                        <button class="btn btn-sm btn-delete" data-product-id="pronative-430c">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Product 5 -->
+                            <div class="product-card">
+                                <div class="product-card-image">
+                                    <img src="../images/products/nordox-express.jpg" alt="Nordox Express 75WG">
+                                </div>
+                                <div class="product-card-content">
+                                    <h3 class="product-card-title">Nordox Express 75WG</h3>
+                                    <div class="product-card-price">KSh 350 - KSh 41,000</div>
+                                    <div class="product-card-category">Fungicides</div>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-product-id="nordox-express">View</button>
+                                        <button class="btn btn-sm btn-edit" data-product-id="nordox-express">Edit</button>
+                                        <button class="btn btn-sm btn-delete" data-product-id="nordox-express">Delete</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination" style="margin-top: 20px;">
+                        <span class="current">1</span>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#" class="next">Next &raquo;</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Product Modal -->
+            <div id="product-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modal-title">Product Details</h2>
+                        <span class="close">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div id="view-product-details">
+                            <div class="product-details">
+                                <div class="product-image-preview" style="width: 150px; height: 150px; margin: 0 auto 20px;">
+                                    <img id="product-image" src="" alt="Product Image">
+                                </div>
+                                
+                                <div class="product-details-row">
+                                    <div class="product-details-label">Name:</div>
+                                    <div class="product-details-value" id="product-name"></div>
+                                </div>
+                                
+                                <div class="product-details-row">
+                                    <div class="product-details-label">Category:</div>
+                                    <div class="product-details-value" id="product-category"></div>
+                                </div>
+                                
+                                <div class="product-details-row">
+                                    <div class="product-details-label">Price:</div>
+                                    <div class="product-details-value" id="product-price"></div>
+                                </div>
+                                
+                                <div class="product-details-row">
+                                    <div class="product-details-label">Description:</div>
+                                    <div class="product-details-value" id="product-description"></div>
+                                </div>
+                                
+                                <div class="product-details-row">
+                                    <div class="product-details-label">Stock Status:</div>
+                                    <div class="product-details-value" id="product-stock"></div>
+                                </div>
+                            </div>
+                            
+                            <div class="modal-actions">
+                                <button class="btn btn-edit" id="modal-edit-btn">Edit Product</button>
+                                <button class="btn btn-delete" id="modal-delete-btn">Delete Product</button>
+                            </div>
+                        </div>
+                        
+                        <div id="edit-product-form" style="display: none;">
+                            <form id="product-form">
+                                <div class="form-group">
+                                    <label for="edit-product-name">Product Name</label>
+                                    <input type="text" id="edit-product-name" class="form-control" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="edit-product-category">Category</label>
+                                    <select id="edit-product-category" class="form-control" required>
+                                        <option value="fertilizers">Fertilizers/Adjuvants</option>
+                                        <option value="fungicides">Fungicides</option>
+                                        <option value="herbicides">Herbicides</option>
+                                        <option value="insecticides">Insecticides</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="edit-product-price-min">Min Price (KSh)</label>
+                                        <input type="number" id="edit-product-price-min" class="form-control" required>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="edit-product-price-max">Max Price (KSh)</label>
+                                        <input type="number" id="edit-product-price-max" class="form-control" required>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="edit-product-description">Description</label>
+                                    <textarea id="edit-product-description" class="form-control" rows="5" required></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="edit-product-stock">Stock Status</label>
+                                    <select id="edit-product-stock" class="form-control" required>
+                                        <option value="in-stock">In Stock</option>
+                                        <option value="out-of-stock">Out of Stock</option>
+                                        <option value="backorder">On Backorder</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="edit-product-image">Product Image</label>
+                                    <input type="file" id="edit-product-image" class="form-control">
+                                    <div class="product-image-preview" style="margin-top: 10px;">
+                                        <img id="edit-image-preview" src="" alt="Product Image">
+                                    </div>
+                                </div>
+                                
+                                <div class="modal-actions">
+                                    <button type="submit" class="btn btn-secondary">Save Changes</button>
+                                    <button type="button" class="btn" id="cancel-edit-btn">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/admin.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // View mode toggle
+            const viewModeSelect = document.getElementById('view-mode');
+            const tableView = document.getElementById('table-view');
+            const gridView = document.getElementById('grid-view');
+            
+            if (viewModeSelect) {
+                viewModeSelect.addEventListener('change', function() {
+                    const viewMode = this.value;
+                    
+                    if (viewMode === 'table') {
+                        tableView.style.display = 'block';
+                        gridView.style.display = 'none';
+                    } else {
+                        tableView.style.display = 'none';
+                        gridView.style.display = 'block';
+                    }
+                });
+            }
+            
+            // Product data (in a real implementation, this would come from a database)
+            const products = {
+                'verno-fertilizer': {
+                    name: 'Verno Fertilizer',
+                    category: 'Fertilizers/Adjuvants',
+                    price: 'KSh 250 - KSh 14,000',
+                    priceMin: 250,
+                    priceMax: 14000,
+                    description: 'Verno Fertilizer is a high-quality fertilizer designed to boost crop growth and yield. It contains essential nutrients that plants need for healthy development.',
+                    stock: 'In Stock',
+                    image: '../images/products/verno-fertilizer.jpg'
+                },
+                'verno-amplifaya': {
+                    name: 'Verno Amplifaya',
+                    category: 'Fertilizers/Adjuvants',
+                    price: 'KSh 250 - KSh 11,000',
+                    priceMin: 250,
+                    priceMax: 11000,
+                    description: 'Verno Amplifaya is a specialized fertilizer formulated to enhance crop growth and development. It contains a balanced blend of nutrients that promote vigorous plant growth.',
+                    stock: 'In Stock',
+                    image: '../images/products/verno-amplifaya.jpg'
+                },
+                'air-chopper': {
+                    name: 'Air Chopper 7.5sc',
+                    category: 'Insecticides',
+                    price: 'KSh 280 - KSh 58,000',
+                    priceMin: 280,
+                    priceMax: 58000,
+                    description: 'Air Chopper 7.5sc is a powerful insecticide that provides effective control against a wide range of insect pests. It contains Imidacloprid 50g/L + Lambda-cyhalothrin 25g/L as active ingredients.',
+                    stock: 'In Stock',
+                    image: '../images/products/air-chopper.jpg'
+                },
+                'pronative-430c': {
+                    name: 'Pronative 430C',
+                    category: 'Fungicides',
+                    price: 'KSh 220 - KSh 38,000',
+                    priceMin: 220,
+                    priceMax: 38000,
+                    description: 'Pronative 430C is a systemic fungicide containing Tebuconazole 430g/L as the active ingredient. It provides effective control against a wide range of fungal diseases in various crops.',
+                    stock: 'In Stock',
+                    image: '../images/products/pronative-430c.jpg'
+                },
+                'nordox-express': {
+                    name: 'Nordox Express 75WG',
+                    category: 'Fungicides',
+                    price: 'KSh 350 - KSh 41,000',
+                    priceMin: 350,
+                    priceMax: 41000,
+                    description: 'Nordox Express 75WG is a protective fungicide containing Cuprous Oxide 860g/Kg as the active ingredient. It provides effective control against a wide range of fungal and bacterial diseases in various crops.',
+                    stock: 'In Stock',
+                    image: '../images/products/nordox-express.jpg'
+                }
+            };
+            
+            // Modal functionality
+            const modal = document.getElementById('product-modal');
+            const closeBtn = document.querySelector('.close');
+            
+            // Close modal when clicking the X
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+            }
+            
+            // Close modal when clicking outside of it
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // View product details
+            const viewButtons = document.querySelectorAll('.btn-view');
+            
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const product = products[productId];
+                    
+                    if (product) {
+                        // Set modal title
+                        document.getElementById('modal-title').textContent = 'Product Details';
+                        
+                        // Show view details, hide edit form
+                        document.getElementById('view-product-details').style.display = 'block';
+                        document.getElementById('edit-product-form').style.display = 'none';
+                        
+                        // Populate product details
+                        document.getElementById('product-image').src = product.image;
+                        document.getElementById('product-name').textContent = product.name;
+                        document.getElementById('product-category').textContent = product.category;
+                        document.getElementById('product-price').textContent = product.price;
+                        document.getElementById('product-description').textContent = product.description;
+                        document.getElementById('product-stock').textContent = product.stock;
+                        
+                        // Set data attribute for edit and delete buttons
+                        document.getElementById('modal-edit-btn').setAttribute('data-product-id', productId);
+                        document.getElementById('modal-delete-btn').setAttribute('data-product-id', productId);
+                        
+                        // Show modal
+                        modal.style.display = 'block';
+                    }
+                });
+            });
+            
+            // Edit product
+            const editButtons = document.querySelectorAll('.btn-edit');
+            
+            editButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const product = products[productId];
+                    
+                    if (product) {
+                        // Set modal title
+                        document.getElementById('modal-title').textContent = 'Edit Product';
+                        
+                        // Hide view details, show edit form
+                        document.getElementById('view-product-details').style.display = 'none';
+                        document.getElementById('edit-product-form').style.display = 'block';
+                        
+                        // Populate form fields
+                        document.getElementById('edit-product-name').value = product.name;
+                        document.getElementById('edit-product-category').value = product.category.toLowerCase().replace('/', '');
+                        document.getElementById('edit-product-price-min').value = product.priceMin;
+                        document.getElementById('edit-product-price-max').value = product.priceMax;
+                        document.getElementById('edit-product-description').value = product.description;
+                        document.getElementById('edit-product-stock').value = product.stock.toLowerCase().replace(' ', '-');
+                        document.getElementById('edit-image-preview').src = product.image;
+                        
+                        // Set form data attribute
+                        document.getElementById('product-form').setAttribute('data-product-id', productId);
+                        
+                        // Show modal
+                        modal.style.display = 'block';
+                    }
+                });
+            });
+            
+            // Modal edit button
+            const modalEditBtn = document.getElementById('modal-edit-btn');
+            
+            if (modalEditBtn) {
+                modalEditBtn.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const product = products[productId];
+                    
+                    if (product) {
+                        // Set modal title
+                        document.getElementById('modal-title').textContent = 'Edit Product';
+                        
+                        // Hide view details, show edit form
+                        document.getElementById('view-product-details').style.display = 'none';
+                        document.getElementById('edit-product-form').style.display = 'block';
+                        
+                        // Populate form fields
+                        document.getElementById('edit-product-name').value = product.name;
+                        document.getElementById('edit-product-category').value = product.category.toLowerCase().replace('/', '');
+                        document.getElementById('edit-product-price-min').value = product.priceMin;
+                        document.getElementById('edit-product-price-max').value = product.priceMax;
+                        document.getElementById('edit-product-description').value = product.description;
+                        document.getElementById('edit-product-stock').value = product.stock.toLowerCase().replace(' ', '-');
+                        document.getElementById('edit-image-preview').src = product.image;
+                        
+                        // Set form data attribute
+                        document.getElementById('product-form').setAttribute('data-product-id', productId);
+                    }
+                });
+            }
+            
+            // Cancel edit button
+            const cancelEditBtn = document.getElementById('cancel-edit-btn');
+            
+            if (cancelEditBtn) {
+                cancelEditBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Get product ID from form
+                    const productId = document.getElementById('product-form').getAttribute('data-product-id');
+                    const product = products[productId];
+                    
+                    if (product) {
+                        // Set modal title
+                        document.getElementById('modal-title').textContent = 'Product Details';
+                        
+                        // Show view details, hide edit form
+                        document.getElementById('view-product-details').style.display = 'block';
+                        document.getElementById('edit-product-form').style.display = 'none';
+                        
+                        // Populate product details
+                        document.getElementById('product-image').src = product.image;
+                        document.getElementById('product-name').textContent = product.name;
+                        document.getElementById('product-category').textContent = product.category;
+                        document.getElementById('product-price').textContent = product.price;
+                        document.getElementById('product-description').textContent = product.description;
+                        document.getElementById('product-stock').textContent = product.stock;
+                    }
+                });
+            }
+            
+            // Product form submission
+            const productForm = document.getElementById('product-form');
+            
+            if (productForm) {
+                productForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const name = document.getElementById('edit-product-name').value;
+                    const category = document.getElementById('edit-product-category').value;
+                    const priceMin = document.getElementById('edit-product-price-min').value;
+                    const priceMax = document.getElementById('edit-product-price-max').value;
+                    const description = document.getElementById('edit-product-description').value;
+                    const stock = document.getElementById('edit-product-stock').value;
+                    
+                    // In a real implementation, you would update the database
+                    // For this demo, we'll just show a success message
+                    alert(`Product "${name}" has been updated successfully.`);
+                    
+                    // Close modal
+                    modal.style.display = 'none';
+                });
+            }
+            
+            // Delete product
+            const deleteButtons = document.querySelectorAll('.btn-delete');
+            
+            deleteButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const product = products[productId];
+                    
+                    if (product && confirm(`Are you sure you want to delete "${product.name}"?`)) {
+                        // In a real implementation, you would delete the product from the database
+                        // For this demo, we'll just show a success message
+                        alert(`Product "${product.name}" has been deleted successfully.`);
+                        
+                        // Close modal if it's open
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Modal delete button
+            const modalDeleteBtn = document.getElementById('modal-delete-btn');
+            
+            if (modalDeleteBtn) {
+                modalDeleteBtn.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const product = products[productId];
+                    
+                    if (product && confirm(`Are you sure you want to delete "${product.name}"?`)) {
+                        // In a real implementation, you would delete the product from the database
+                        // For this demo, we'll just show a success message
+                        alert(`Product "${product.name}" has been deleted successfully.`);
+                        
+                        // Close modal
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Add new product button
+            const addProductBtn = document.getElementById('add-product-btn');
+            
+            if (addProductBtn) {
+                addProductBtn.addEventListener('click', function() {
+                    // Set modal title
+                    document.getElementById('modal-title').textContent = 'Add New Product';
+                    
+                    // Hide view details, show edit form
+                    document.getElementById('view-product-details').style.display = 'none';
+                    document.getElementById('edit-product-form').style.display = 'block';
+                    
+                    // Clear form fields
+                    document.getElementById('edit-product-name').value = '';
+                    document.getElementById('edit-product-category').value = 'fertilizers';
+                    document.getElementById('edit-product-price-min').value = '';
+                    document.getElementById('edit-product-price-max').value = '';
+                    document.getElementById('edit-product-description').value = '';
+                    document.getElementById('edit-product-stock').value = 'in-stock';
+                    document.getElementById('edit-image-preview').src = '';
+                    
+                    // Remove data attribute from form
+                    document.getElementById('product-form').removeAttribute('data-product-id');
+                    
+                    // Show modal
+                    modal.style.display = 'block';
+                });
+            }
+            
+            // Import products button
+            const importProductsBtn = document.getElementById('import-products-btn');
+            
+            if (importProductsBtn) {
+                importProductsBtn.addEventListener('click', function() {
+                    alert('Import products functionality would be implemented here.');
+                });
+            }
+            
+            // Export products button
+            const exportProductsBtn = document.getElementById('export-products-btn');
+            
+            if (exportProductsBtn) {
+                exportProductsBtn.addEventListener('click', function() {
+                    alert('Export products functionality would be implemented here.');
+                });
+            }
+            
+            // Apply filters button
+            const applyFiltersBtn = document.getElementById('apply-filters-btn');
+            
+            if (applyFiltersBtn) {
+                applyFiltersBtn.addEventListener('click', function() {
+                    const category = document.getElementById('category-filter').value;
+                    const search = document.getElementById('search-products').value;
+                    
+                    alert(`Filters applied: Category = ${category || 'All'}, Search = ${search || 'None'}`);
+                });
+            }
+        });
+    </script>
+    
+    <style>
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .close {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #6c757d;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #343a40;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        /* Product Details */
+        .product-details {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .product-details-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .product-details-label {
+            width: 120px;
+            font-weight: 600;
+        }
+        
+        .product-details-value {
+            flex: 1;
+        }
+    </style>
+</body>
+</html>

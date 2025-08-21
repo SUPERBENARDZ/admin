@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agent Management - AgribaseGroup Admin</title>
+    <meta name="description" content="Manage agents for AgribaseGroup e-commerce website.">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/admin-style.css">
+    <link rel="stylesheet" href="css/admin-responsive.css">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container">
+            <div class="admin-logo">
+                <img src="../images/logo.png" alt="AgribaseGroup Logo">
+            </div>
+            
+            <div class="admin-user">
+                <div class="admin-user-info">
+                    <h4>Admin User</h4>
+                    <p>Administrator</p>
+                </div>
+                
+                <div class="admin-user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Admin Container -->
+    <div class="admin-container">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <ul class="admin-menu">
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="products.html">
+                        <i class="fas fa-box"></i> Products
+                    </a>
+                </li>
+                <li>
+                    <a href="orders.html">
+                        <i class="fas fa-shopping-cart"></i> Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="agents.html" class="active">
+                        <i class="fas fa-users"></i> Agents
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+                <li>
+                    <button type="button" class="logout-btn" id="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </li>
+            </ul>
+        </aside>
+        
+        <!-- Admin Content -->
+        <main class="admin-content">
+            <div class="admin-title">
+                <h1>Agent Management</h1>
+                <p>Manage agent applications and active agents</p>
+            </div>
+            
+            <!-- Agent Stats -->
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <h3>Total Agents</h3>
+                        <div class="stat-card-icon icon-agents">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">5</div>
+                    <div class="stat-card-label">Active agents</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <h3>Pending Applications</h3>
+                        <div class="stat-card-icon" style="background-color: #ffc107;">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">3</div>
+                    <div class="stat-card-label">Awaiting approval</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <h3>Agent Sales</h3>
+                        <div class="stat-card-icon icon-revenue">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">KSh 85,200</div>
+                    <div class="stat-card-label">Total sales this month</div>
+                </div>
+            </div>
+            
+            <!-- Agent Applications -->
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h2>Agent Applications</h2>
+                    <div>
+                        <button class="btn btn-sm" id="refresh-applications">Refresh</button>
+                    </div>
+                </div>
+                
+                <div class="admin-card-body">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Date Applied</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="agent-applications-table">
+                            <tr>
+                                <td>Peter Kariuki</td>
+                                <td>peter.k@example.com</td>
+                                <td>+254 712 345 678</td>
+                                <td>Aug 20, 2025</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-agent-id="app1">View</button>
+                                        <button class="btn btn-sm btn-edit approve-btn" data-agent-id="app1">Approve</button>
+                                        <button class="btn btn-sm btn-delete reject-btn" data-agent-id="app1">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Grace Wambui</td>
+                                <td>grace.w@example.com</td>
+                                <td>+254 723 456 789</td>
+                                <td>Aug 19, 2025</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-agent-id="app2">View</button>
+                                        <button class="btn btn-sm btn-edit approve-btn" data-agent-id="app2">Approve</button>
+                                        <button class="btn btn-sm btn-delete reject-btn" data-agent-id="app2">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Samuel Omondi</td>
+                                <td>samuel.o@example.com</td>
+                                <td>+254 734 567 890</td>
+                                <td>Aug 18, 2025</td>
+                                <td><span class="status-badge status-pending">Pending</span></td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-agent-id="app3">View</button>
+                                        <button class="btn btn-sm btn-edit approve-btn" data-agent-id="app3">Approve</button>
+                                        <button class="btn btn-sm btn-delete reject-btn" data-agent-id="app3">Reject</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Active Agents -->
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h2>Active Agents</h2>
+                    <div>
+                        <button class="btn btn-sm" id="generate-report">Generate Report</button>
+                    </div>
+                </div>
+                
+                <div class="admin-card-body">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Agent Code</th>
+                                <th>Date Approved</th>
+                                <th>Sales</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Jane Muthoni</td>
+                                <td>jane.m@example.com</td>
+                                <td>+254 712 123 456</td>
+                                <td><span class="agent-code">AG001</span></td>
+                                <td>Jul 15, 2025</td>
+                                <td>KSh 25,400</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view">View</button>
+                                        <button class="btn btn-sm btn-edit">Edit</button>
+                                        <button class="btn btn-sm btn-delete">Deactivate</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>John Kamau</td>
+                                <td>john.k@example.com</td>
+                                <td>+254 723 234 567</td>
+                                <td><span class="agent-code">AG002</span></td>
+                                <td>Jul 20, 2025</td>
+                                <td>KSh 18,700</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view">View</button>
+                                        <button class="btn btn-sm btn-edit">Edit</button>
+                                        <button class="btn btn-sm btn-delete">Deactivate</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mary Wanjiku</td>
+                                <td>mary.w@example.com</td>
+                                <td>+254 734 345 678</td>
+                                <td><span class="agent-code">AG003</span></td>
+                                <td>Jul 25, 2025</td>
+                                <td>KSh 22,100</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view">View</button>
+                                        <button class="btn btn-sm btn-edit">Edit</button>
+                                        <button class="btn btn-sm btn-delete">Deactivate</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>David Ochieng</td>
+                                <td>david.o@example.com</td>
+                                <td>+254 745 456 789</td>
+                                <td><span class="agent-code">AG004</span></td>
+                                <td>Aug 01, 2025</td>
+                                <td>KSh 15,200</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view">View</button>
+                                        <button class="btn btn-sm btn-edit">Edit</button>
+                                        <button class="btn btn-sm btn-delete">Deactivate</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sarah Njeri</td>
+                                <td>sarah.n@example.com</td>
+                                <td>+254 756 567 890</td>
+                                <td><span class="agent-code">AG005</span></td>
+                                <td>Aug 05, 2025</td>
+                                <td>KSh 3,800</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view">View</button>
+                                        <button class="btn btn-sm btn-edit">Edit</button>
+                                        <button class="btn btn-sm btn-delete">Deactivate</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Agent Details Modal -->
+            <div id="agent-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2>Agent Details</h2>
+                        <span class="close">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div class="agent-details">
+                            <div class="agent-details-row">
+                                <div class="agent-details-label">Name:</div>
+                                <div class="agent-details-value" id="agent-name"></div>
+                            </div>
+                            <div class="agent-details-row">
+                                <div class="agent-details-label">Email:</div>
+                                <div class="agent-details-value" id="agent-email"></div>
+                            </div>
+                            <div class="agent-details-row">
+                                <div class="agent-details-label">Phone:</div>
+                                <div class="agent-details-value" id="agent-phone"></div>
+                            </div>
+                            <div class="agent-details-row">
+                                <div class="agent-details-label">Address:</div>
+                                <div class="agent-details-value" id="agent-address"></div>
+                            </div>
+                            <div class="agent-details-row">
+                                <div class="agent-details-label">ID Number:</div>
+                                <div class="agent-details-value" id="agent-id-number"></div>
+                            </div>
+                            <div class="agent-details-row">
+                                <div class="agent-details-label">Experience:</div>
+                                <div class="agent-details-value" id="agent-experience"></div>
+                            </div>
+                            <div class="agent-details-row">
+                                <div class="agent-details-label">Areas Covered:</div>
+                                <div class="agent-details-value" id="agent-areas"></div>
+                            </div>
+                            <div class="agent-details-row" id="agent-code-row" style="display: none;">
+                                <div class="agent-details-label">Agent Code:</div>
+                                <div class="agent-details-value" id="agent-code"></div>
+                            </div>
+                            <div class="agent-details-row" id="agent-status-row">
+                                <div class="agent-details-label">Status:</div>
+                                <div class="agent-details-value" id="agent-status"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="modal-actions" id="application-actions">
+                            <button class="btn btn-edit approve-btn" id="modal-approve-btn">Approve Application</button>
+                            <button class="btn btn-delete reject-btn" id="modal-reject-btn">Reject Application</button>
+                        </div>
+                        
+                        <div class="modal-actions" id="agent-actions" style="display: none;">
+                            <button class="btn btn-edit" id="modal-edit-btn">Edit Agent</button>
+                            <button class="btn btn-delete" id="modal-deactivate-btn">Deactivate Agent</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/admin.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Additional agents page specific functionality
+            
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    // Clear login status
+                    localStorage.removeItem('adminLoggedIn');
+                    
+                    // Redirect to login page
+                    window.location.href = 'index.html';
+                });
+            }
+            
+            // Modal functionality
+            const modal = document.getElementById('agent-modal');
+            const closeBtn = document.querySelector('.close');
+            
+            // Close modal when clicking the X
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+            }
+            
+            // Close modal when clicking outside of it
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // View agent application details
+            const viewButtons = document.querySelectorAll('.btn-view');
+            
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const agentId = this.getAttribute('data-agent-id');
+                    
+                    // In a real implementation, you would fetch agent details from a database
+                    // For this demo, we'll use hardcoded data
+                    let agentData;
+                    
+                    if (agentId === 'app1') {
+                        agentData = {
+                            name: 'Peter Kariuki',
+                            email: 'peter.k@example.com',
+                            phone: '+254 712 345 678',
+                            address: 'Nairobi, Kenya',
+                            idNumber: '12345678',
+                            experience: 'I have been working in agriculture for 5 years, specializing in crop production.',
+                            areas: 'Nairobi, Kiambu, Machakos',
+                            status: 'Pending'
+                        };
+                        
+                        // Show application actions, hide agent actions
+                        document.getElementById('application-actions').style.display = 'flex';
+                        document.getElementById('agent-actions').style.display = 'none';
+                        document.getElementById('agent-code-row').style.display = 'none';
+                        
+                    } else if (agentId === 'app2') {
+                        agentData = {
+                            name: 'Grace Wambui',
+                            email: 'grace.w@example.com',
+                            phone: '+254 723 456 789',
+                            address: 'Nakuru, Kenya',
+                            idNumber: '23456789',
+                            experience: 'I have worked as a sales representative for agricultural products for 3 years.',
+                            areas: 'Nakuru, Naivasha, Gilgil',
+                            status: 'Pending'
+                        };
+                        
+                        // Show application actions, hide agent actions
+                        document.getElementById('application-actions').style.display = 'flex';
+                        document.getElementById('agent-actions').style.display = 'none';
+                        document.getElementById('agent-code-row').style.display = 'none';
+                        
+                    } else if (agentId === 'app3') {
+                        agentData = {
+                            name: 'Samuel Omondi',
+                            email: 'samuel.o@example.com',
+                            phone: '+254 734 567 890',
+                            address: 'Kisumu, Kenya',
+                            idNumber: '34567890',
+                            experience: 'I am a farmer with 10 years of experience in crop and livestock farming.',
+                            areas: 'Kisumu, Siaya, Busia',
+                            status: 'Pending'
+                        };
+                        
+                        // Show application actions, hide agent actions
+                        document.getElementById('application-actions').style.display = 'flex';
+                        document.getElementById('agent-actions').style.display = 'none';
+                        document.getElementById('agent-code-row').style.display = 'none';
+                        
+                    } else {
+                        // For active agents
+                        const row = this.closest('tr');
+                        const name = row.cells[0].textContent;
+                        const email = row.cells[1].textContent;
+                        const phone = row.cells[2].textContent;
+                        const agentCode = row.cells[3].textContent;
+                        
+                        agentData = {
+                            name: name,
+                            email: email,
+                            phone: phone,
+                            address: 'Kenya',
+                            idNumber: '12345678',
+                            experience: 'Experienced sales agent with agricultural background.',
+                            areas: 'Various regions in Kenya',
+                            status: 'Active',
+                            agentCode: agentCode
+                        };
+                        
+                        // Show agent actions, hide application actions
+                        document.getElementById('application-actions').style.display = 'none';
+                        document.getElementById('agent-actions').style.display = 'flex';
+                        document.getElementById('agent-code-row').style.display = 'flex';
+                    }
+                    
+                    // Populate modal with agent data
+                    document.getElementById('agent-name').textContent = agentData.name;
+                    document.getElementById('agent-email').textContent = agentData.email;
+                    document.getElementById('agent-phone').textContent = agentData.phone;
+                    document.getElementById('agent-address').textContent = agentData.address;
+                    document.getElementById('agent-id-number').textContent = agentData.idNumber;
+                    document.getElementById('agent-experience').textContent = agentData.experience;
+                    document.getElementById('agent-areas').textContent = agentData.areas;
+                    document.getElementById('agent-status').textContent = agentData.status;
+                    
+                    if (agentData.agentCode) {
+                        document.getElementById('agent-code').textContent = agentData.agentCode;
+                    }
+                    
+                    // Show modal
+                    modal.style.display = 'block';
+                });
+            });
+            
+            // Approve agent application
+            const approveButtons = document.querySelectorAll('.approve-btn');
+            
+            approveButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const agentId = this.getAttribute('data-agent-id');
+                    let agentName = '';
+                    
+                    if (agentId === 'app1') {
+                        agentName = 'Peter Kariuki';
+                    } else if (agentId === 'app2') {
+                        agentName = 'Grace Wambui';
+                    } else if (agentId === 'app3') {
+                        agentName = 'Samuel Omondi';
+                    } else {
+                        // For modal approve button
+                        agentName = document.getElementById('agent-name').textContent;
+                    }
+                    
+                    if (confirm(`Are you sure you want to approve ${agentName}'s application?`)) {
+                        alert(`Application approved! Agent code generated for ${agentName}.`);
+                        
+                        // In a real implementation, you would update the database
+                        // For this demo, we'll just close the modal if it's open
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Reject agent application
+            const rejectButtons = document.querySelectorAll('.reject-btn');
+            
+            rejectButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const agentId = this.getAttribute('data-agent-id');
+                    let agentName = '';
+                    
+                    if (agentId === 'app1') {
+                        agentName = 'Peter Kariuki';
+                    } else if (agentId === 'app2') {
+                        agentName = 'Grace Wambui';
+                    } else if (agentId === 'app3') {
+                        agentName = 'Samuel Omondi';
+                    } else {
+                        // For modal reject button
+                        agentName = document.getElementById('agent-name').textContent;
+                    }
+                    
+                    if (confirm(`Are you sure you want to reject ${agentName}'s application?`)) {
+                        alert(`Application rejected for ${agentName}.`);
+                        
+                        // In a real implementation, you would update the database
+                        // For this demo, we'll just close the modal if it's open
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Generate report button
+            const generateReportBtn = document.getElementById('generate-report');
+            
+            if (generateReportBtn) {
+                generateReportBtn.addEventListener('click', function() {
+                    alert('Agent sales report generated and downloaded.');
+                });
+            }
+            
+            // Refresh applications button
+            const refreshApplicationsBtn = document.getElementById('refresh-applications');
+            
+            if (refreshApplicationsBtn) {
+                refreshApplicationsBtn.addEventListener('click', function() {
+                    alert('Agent applications refreshed.');
+                });
+            }
+            
+            // Modal action buttons
+            const modalApproveBtn = document.getElementById('modal-approve-btn');
+            const modalRejectBtn = document.getElementById('modal-reject-btn');
+            const modalEditBtn = document.getElementById('modal-edit-btn');
+            const modalDeactivateBtn = document.getElementById('modal-deactivate-btn');
+            
+            if (modalApproveBtn) {
+                modalApproveBtn.addEventListener('click', function() {
+                    const agentName = document.getElementById('agent-name').textContent;
+                    
+                    if (confirm(`Are you sure you want to approve ${agentName}'s application?`)) {
+                        alert(`Application approved! Agent code generated for ${agentName}.`);
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+            
+            if (modalRejectBtn) {
+                modalRejectBtn.addEventListener('click', function() {
+                    const agentName = document.getElementById('agent-name').textContent;
+                    
+                    if (confirm(`Are you sure you want to reject ${agentName}'s application?`)) {
+                        alert(`Application rejected for ${agentName}.`);
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+            
+            if (modalEditBtn) {
+                modalEditBtn.addEventListener('click', function() {
+                    const agentName = document.getElementById('agent-name').textContent;
+                    alert(`Edit agent details for ${agentName}.`);
+                    // In a real implementation, you would show an edit form
+                });
+            }
+            
+            if (modalDeactivateBtn) {
+                modalDeactivateBtn.addEventListener('click', function() {
+                    const agentName = document.getElementById('agent-name').textContent;
+                    
+                    if (confirm(`Are you sure you want to deactivate ${agentName}?`)) {
+                        alert(`Agent ${agentName} has been deactivated.`);
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+    
+    <style>
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 600px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .close {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #6c757d;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #343a40;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</body>
+</html>

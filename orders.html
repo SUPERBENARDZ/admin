@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management - AgribaseGroup Admin</title>
+    <meta name="description" content="Manage orders for AgribaseGroup e-commerce website.">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/admin-style.css">
+    <link rel="stylesheet" href="css/admin-responsive.css">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Admin Header -->
+    <header class="admin-header">
+        <div class="container">
+            <div class="admin-logo">
+                <img src="../images/logo.png" alt="AgribaseGroup Logo">
+            </div>
+            
+            <div class="admin-user">
+                <div class="admin-user-info">
+                    <h4>Admin User</h4>
+                    <p>Administrator</p>
+                </div>
+                
+                <div class="admin-user-avatar">
+                    <i class="fas fa-user"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Admin Container -->
+    <div class="admin-container">
+        <!-- Admin Sidebar -->
+        <aside class="admin-sidebar">
+            <ul class="admin-menu">
+                <li>
+                    <a href="dashboard.html">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="products.html">
+                        <i class="fas fa-box"></i> Products
+                    </a>
+                </li>
+                <li>
+                    <a href="orders.html" class="active">
+                        <i class="fas fa-shopping-cart"></i> Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="agents.html">
+                        <i class="fas fa-users"></i> Agents
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.html">
+                        <i class="fas fa-cog"></i> Settings
+                    </a>
+                </li>
+                <li>
+                    <button type="button" class="logout-btn" id="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </li>
+            </ul>
+        </aside>
+        
+        <!-- Admin Content -->
+        <main class="admin-content">
+            <div class="admin-title">
+                <h1>Order Management</h1>
+                <p>View and manage customer orders</p>
+            </div>
+            
+            <!-- Order Stats -->
+            <div class="admin-stats">
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <h3>Total Orders</h3>
+                        <div class="stat-card-icon icon-orders">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">28</div>
+                    <div class="stat-card-label">Orders this month</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <h3>Pending Orders</h3>
+                        <div class="stat-card-icon" style="background-color: #ffc107;">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">5</div>
+                    <div class="stat-card-label">Awaiting processing</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <h3>Total Revenue</h3>
+                        <div class="stat-card-icon icon-revenue">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">KSh 125,400</div>
+                    <div class="stat-card-label">Revenue this month</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-card-header">
+                        <h3>Agent Orders</h3>
+                        <div class="stat-card-icon icon-agents">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="stat-card-value">12</div>
+                    <div class="stat-card-label">Orders with agent codes</div>
+                </div>
+            </div>
+            
+            <!-- Order Filters -->
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h2>Order Filters</h2>
+                </div>
+                
+                <div class="admin-card-body">
+                    <div class="filter-options">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="status-filter">Filter by Status</label>
+                                <select id="status-filter" class="form-control">
+                                    <option value="">All Statuses</option>
+                                    <option value="pending">Processing</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="date-filter">Filter by Date</label>
+                                <select id="date-filter" class="form-control">
+                                    <option value="">All Time</option>
+                                    <option value="today">Today</option>
+                                    <option value="yesterday">Yesterday</option>
+                                    <option value="last7">Last 7 Days</option>
+                                    <option value="last30">Last 30 Days</option>
+                                    <option value="thisMonth">This Month</option>
+                                    <option value="lastMonth">Last Month</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="agent-filter">Filter by Agent</label>
+                                <select id="agent-filter" class="form-control">
+                                    <option value="">All Orders</option>
+                                    <option value="agent">Agent Orders Only</option>
+                                    <option value="non-agent">Non-Agent Orders Only</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group" style="align-self: flex-end;">
+                                <button class="btn" id="apply-filters-btn">Apply Filters</button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="search-orders">Search Orders</label>
+                                <input type="text" id="search-orders" class="form-control" placeholder="Search by order ID, customer name...">
+                            </div>
+                            
+                            <div class="form-group" style="align-self: flex-end;">
+                                <button class="btn" id="search-btn">Search</button>
+                            </div>
+                            
+                            <div class="form-group" style="align-self: flex-end; margin-left: auto;">
+                                <button class="btn" id="export-orders-btn">
+                                    <i class="fas fa-file-export"></i> Export Orders
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Orders List -->
+            <div class="admin-card">
+                <div class="admin-card-header">
+                    <h2>Orders List</h2>
+                </div>
+                
+                <div class="admin-card-body">
+                    <table class="admin-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                                <th>Agent Code</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#ORD-2025-001</td>
+                                <td>John Kamau</td>
+                                <td>Aug 20, 2025</td>
+                                <td>KSh 12,500</td>
+                                <td><span class="status-badge status-approved">Completed</span></td>
+                                <td>AG001</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-order-id="ORD-2025-001">View</button>
+                                        <button class="btn btn-sm btn-edit" data-order-id="ORD-2025-001">Update</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-2025-002</td>
+                                <td>Mary Wanjiku</td>
+                                <td>Aug 19, 2025</td>
+                                <td>KSh 8,750</td>
+                                <td><span class="status-badge status-pending">Processing</span></td>
+                                <td>-</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-order-id="ORD-2025-002">View</button>
+                                        <button class="btn btn-sm btn-edit" data-order-id="ORD-2025-002">Update</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-2025-003</td>
+                                <td>David Ochieng</td>
+                                <td>Aug 18, 2025</td>
+                                <td>KSh 15,200</td>
+                                <td><span class="status-badge status-approved">Completed</span></td>
+                                <td>AG003</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-order-id="ORD-2025-003">View</button>
+                                        <button class="btn btn-sm btn-edit" data-order-id="ORD-2025-003">Update</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-2025-004</td>
+                                <td>Sarah Njeri</td>
+                                <td>Aug 17, 2025</td>
+                                <td>KSh 5,800</td>
+                                <td><span class="status-badge status-approved">Completed</span></td>
+                                <td>-</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-order-id="ORD-2025-004">View</button>
+                                        <button class="btn btn-sm btn-edit" data-order-id="ORD-2025-004">Update</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-2025-005</td>
+                                <td>James Mwangi</td>
+                                <td>Aug 16, 2025</td>
+                                <td>KSh 9,300</td>
+                                <td><span class="status-badge status-pending">Processing</span></td>
+                                <td>AG002</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-order-id="ORD-2025-005">View</button>
+                                        <button class="btn btn-sm btn-edit" data-order-id="ORD-2025-005">Update</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-2025-006</td>
+                                <td>Grace Wambui</td>
+                                <td>Aug 15, 2025</td>
+                                <td>KSh 7,200</td>
+                                <td><span class="status-badge status-pending">Processing</span></td>
+                                <td>-</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-order-id="ORD-2025-006">View</button>
+                                        <button class="btn btn-sm btn-edit" data-order-id="ORD-2025-006">Update</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-2025-007</td>
+                                <td>Peter Kariuki</td>
+                                <td>Aug 14, 2025</td>
+                                <td>KSh 11,500</td>
+                                <td><span class="status-badge status-approved">Completed</span></td>
+                                <td>AG001</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-order-id="ORD-2025-007">View</button>
+                                        <button class="btn btn-sm btn-edit" data-order-id="ORD-2025-007">Update</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-2025-008</td>
+                                <td>Jane Muthoni</td>
+                                <td>Aug 13, 2025</td>
+                                <td>KSh 6,800</td>
+                                <td><span class="status-badge status-rejected">Cancelled</span></td>
+                                <td>-</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-order-id="ORD-2025-008">View</button>
+                                        <button class="btn btn-sm btn-edit" data-order-id="ORD-2025-008">Update</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-2025-009</td>
+                                <td>Samuel Omondi</td>
+                                <td>Aug 12, 2025</td>
+                                <td>KSh 14,200</td>
+                                <td><span class="status-badge status-approved">Completed</span></td>
+                                <td>AG004</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-order-id="ORD-2025-009">View</button>
+                                        <button class="btn btn-sm btn-edit" data-order-id="ORD-2025-009">Update</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-2025-010</td>
+                                <td>Lucy Wangari</td>
+                                <td>Aug 11, 2025</td>
+                                <td>KSh 8,900</td>
+                                <td><span class="status-badge status-pending">Processing</span></td>
+                                <td>-</td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <button class="btn btn-sm btn-view" data-order-id="ORD-2025-010">View</button>
+                                        <button class="btn btn-sm btn-edit" data-order-id="ORD-2025-010">Update</button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <!-- Pagination -->
+                    <div class="pagination" style="margin-top: 20px;">
+                        <span class="current">1</span>
+                        <a href="#">2</a>
+                        <a href="#">3</a>
+                        <a href="#" class="next">Next &raquo;</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Order Modal -->
+            <div id="order-modal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h2 id="modal-title">Order Details</h2>
+                        <span class="close">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <div id="view-order-details">
+                            <div class="order-details">
+                                <div class="order-section">
+                                    <h3>Order Information</h3>
+                                    <div class="order-details-row">
+                                        <div class="order-details-label">Order ID:</div>
+                                        <div class="order-details-value" id="order-id"></div>
+                                    </div>
+                                    <div class="order-details-row">
+                                        <div class="order-details-label">Date:</div>
+                                        <div class="order-details-value" id="order-date"></div>
+                                    </div>
+                                    <div class="order-details-row">
+                                        <div class="order-details-label">Status:</div>
+                                        <div class="order-details-value" id="order-status"></div>
+                                    </div>
+                                    <div class="order-details-row">
+                                        <div class="order-details-label">Agent Code:</div>
+                                        <div class="order-details-value" id="order-agent-code"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="order-section">
+                                    <h3>Customer Information</h3>
+                                    <div class="order-details-row">
+                                        <div class="order-details-label">Name:</div>
+                                        <div class="order-details-value" id="customer-name"></div>
+                                    </div>
+                                    <div class="order-details-row">
+                                        <div class="order-details-label">Email:</div>
+                                        <div class="order-details-value" id="customer-email"></div>
+                                    </div>
+                                    <div class="order-details-row">
+                                        <div class="order-details-label">Phone:</div>
+                                        <div class="order-details-value" id="customer-phone"></div>
+                                    </div>
+                                    <div class="order-details-row">
+                                        <div class="order-details-label">Address:</div>
+                                        <div class="order-details-value" id="customer-address"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="order-section">
+                                    <h3>Order Items</h3>
+                                    <table class="admin-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Price</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="order-items">
+                                            <!-- Order items will be dynamically added here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                                <div class="order-section">
+                                    <h3>Order Summary</h3>
+                                    <div class="order-details-row">
+                                        <div class="order-details-label">Subtotal:</div>
+                                        <div class="order-details-value" id="order-subtotal"></div>
+                                    </div>
+                                    <div class="order-details-row">
+                                        <div class="order-details-label">Shipping:</div>
+                                        <div class="order-details-value" id="order-shipping"></div>
+                                    </div>
+                                    <div class="order-details-row total">
+                                        <div class="order-details-label">Total:</div>
+                                        <div class="order-details-value" id="order-total"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="order-section">
+                                    <h3>Payment Information</h3>
+                                    <div class="order-details-row">
+                                        <div class="order-details-label">Payment Method:</div>
+                                        <div class="order-details-value" id="payment-method"></div>
+                                    </div>
+                                    <div class="order-details-row">
+                                        <div class="order-details-label">Payment Status:</div>
+                                        <div class="order-details-value" id="payment-status"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="modal-actions">
+                                <button class="btn btn-edit" id="modal-update-btn">Update Status</button>
+                                <button class="btn" id="modal-print-btn">Print Order</button>
+                                <button class="btn" id="modal-whatsapp-btn">Send WhatsApp</button>
+                            </div>
+                        </div>
+                        
+                        <div id="update-order-form" style="display: none;">
+                            <form id="order-form">
+                                <div class="form-group">
+                                    <label for="update-order-status">Order Status</label>
+                                    <select id="update-order-status" class="form-control" required>
+                                        <option value="processing">Processing</option>
+                                        <option value="completed">Completed</option>
+                                        <option value="cancelled">Cancelled</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="update-payment-status">Payment Status</label>
+                                    <select id="update-payment-status" class="form-control" required>
+                                        <option value="pending">Pending</option>
+                                        <option value="paid">Paid</option>
+                                        <option value="refunded">Refunded</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="update-notes">Notes</label>
+                                    <textarea id="update-notes" class="form-control" rows="3"></textarea>
+                                </div>
+                                
+                                <div class="modal-actions">
+                                    <button type="submit" class="btn btn-secondary">Save Changes</button>
+                                    <button type="button" class="btn" id="cancel-update-btn">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/admin.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Additional orders page specific functionality
+            
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    // Clear login status
+                    localStorage.removeItem('adminLoggedIn');
+                    
+                    // Redirect to login page
+                    window.location.href = 'index.html';
+                });
+            }
+            
+            // Order data (in a real implementation, this would come from a database)
+            const orders = {
+                'ORD-2025-001': {
+                    id: '#ORD-2025-001',
+                    date: 'Aug 20, 2025',
+                    status: 'Completed',
+                    agentCode: 'AG001',
+                    customer: {
+                        name: 'John Kamau',
+                        email: 'john.k@example.com',
+                        phone: '+254 712 345 678',
+                        address: 'Nairobi, Kenya'
+                    },
+                    items: [
+                        {
+                            product: 'Verno Fertilizer (1kg)',
+                            price: 'KSh 1,800',
+                            quantity: 5,
+                            total: 'KSh 9,000'
+                        },
+                        {
+                            product: 'Air Chopper 7.5sc (250ml)',
+                            price: 'KSh 3,500',
+                            quantity: 1,
+                            total: 'KSh 3,500'
+                        }
+                    ],
+                    subtotal: 'KSh 12,500',
+                    shipping: 'KSh 0',
+                    total: 'KSh 12,500',
+                    payment: {
+                        method: 'M-Pesa',
+                        status: 'Paid'
+                    }
+                },
+                'ORD-2025-002': {
+                    id: '#ORD-2025-002',
+                    date: 'Aug 19, 2025',
+                    status: 'Processing',
+                    agentCode: '-',
+                    customer: {
+                        name: 'Mary Wanjiku',
+                        email: 'mary.w@example.com',
+                        phone: '+254 723 456 789',
+                        address: 'Nakuru, Kenya'
+                    },
+                    items: [
+                        {
+                            product: 'Verno Amplifaya (500g)',
+                            price: 'KSh 1,000',
+                            quantity: 3,
+                            total: 'KSh 3,000'
+                        },
+                        {
+                            product: 'Nordox Express 75WG (250g)',
+                            price: 'KSh 1,750',
+                            quantity: 2,
+                            total: 'KSh 3,500'
+                        },
+                        {
+                            product: 'Booster Power Gelly (250g)',
+                            price: 'KSh 750',
+                            quantity: 3,
+                            total: 'KSh 2,250'
+                        }
+                    ],
+                    subtotal: 'KSh 8,750',
+                    shipping: 'KSh 0',
+                    total: 'KSh 8,750',
+                    payment: {
+                        method: 'Cash on Delivery',
+                        status: 'Pending'
+                    }
+                },
+                'ORD-2025-003': {
+                    id: '#ORD-2025-003',
+                    date: 'Aug 18, 2025',
+                    status: 'Completed',
+                    agentCode: 'AG003',
+                    customer: {
+                        name: 'David Ochieng',
+                        email: 'david.o@example.com',
+                        phone: '+254 734 567 890',
+                        address: 'Kisumu, Kenya'
+                    },
+                    items: [
+                        {
+                            product: 'Buldoza Glyphosate 480 SL (5L)',
+                            price: 'KSh 8,500',
+                            quantity: 1,
+                            total: 'KSh 8,500'
+                        },
+                        {
+                            product: 'Pronative 430C (1L)',
+                            price: 'KSh 6,700',
+                            quantity: 1,
+                            total: 'KSh 6,700'
+                        }
+                    ],
+                    subtotal: 'KSh 15,200',
+                    shipping: 'KSh 0',
+                    total: 'KSh 15,200',
+                    payment: {
+                        method: 'M-Pesa',
+                        status: 'Paid'
+                    }
+                }
+            };
+            
+            // Modal functionality
+            const modal = document.getElementById('order-modal');
+            const closeBtn = document.querySelector('.close');
+            
+            // Close modal when clicking the X
+            if (closeBtn) {
+                closeBtn.addEventListener('click', function() {
+                    modal.style.display = 'none';
+                });
+            }
+            
+            // Close modal when clicking outside of it
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // View order details
+            const viewButtons = document.querySelectorAll('.btn-view');
+            
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const orderId = this.getAttribute('data-order-id');
+                    const order = orders[orderId];
+                    
+                    if (order) {
+                        // Set modal title
+                        document.getElementById('modal-title').textContent = `Order Details - ${order.id}`;
+                        
+                        // Show view details, hide update form
+                        document.getElementById('view-order-details').style.display = 'block';
+                        document.getElementById('update-order-form').style.display = 'none';
+                        
+                        // Populate order details
+                        document.getElementById('order-id').textContent = order.id;
+                        document.getElementById('order-date').textContent = order.date;
+                        
+                        // Set status with badge
+                        const statusElement = document.getElementById('order-status');
+                        let statusClass = '';
+                        
+                        if (order.status === 'Completed') {
+                            statusClass = 'status-approved';
+                        } else if (order.status === 'Processing') {
+                            statusClass = 'status-pending';
+                        } else if (order.status === 'Cancelled') {
+                            statusClass = 'status-rejected';
+                        }
+                        
+                        statusElement.innerHTML = `<span class="status-badge ${statusClass}">${order.status}</span>`;
+                        
+                        document.getElementById('order-agent-code').textContent = order.agentCode;
+                        
+                        // Populate customer details
+                        document.getElementById('customer-name').textContent = order.customer.name;
+                        document.getElementById('customer-email').textContent = order.customer.email;
+                        document.getElementById('customer-phone').textContent = order.customer.phone;
+                        document.getElementById('customer-address').textContent = order.customer.address;
+                        
+                        // Populate order items
+                        const orderItemsTable = document.getElementById('order-items');
+                        orderItemsTable.innerHTML = '';
+                        
+                        order.items.forEach(item => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${item.product}</td>
+                                <td>${item.price}</td>
+                                <td>${item.quantity}</td>
+                                <td>${item.total}</td>
+                            `;
+                            orderItemsTable.appendChild(row);
+                        });
+                        
+                        // Populate order summary
+                        document.getElementById('order-subtotal').textContent = order.subtotal;
+                        document.getElementById('order-shipping').textContent = order.shipping;
+                        document.getElementById('order-total').textContent = order.total;
+                        
+                        // Populate payment information
+                        document.getElementById('payment-method').textContent = order.payment.method;
+                        document.getElementById('payment-status').textContent = order.payment.status;
+                        
+                        // Set data attribute for update button
+                        document.getElementById('modal-update-btn').setAttribute('data-order-id', orderId);
+                        
+                        // Show modal
+                        modal.style.display = 'block';
+                    } else {
+                        // If order not found in our demo data, show a generic order
+                        // Set modal title
+                        document.getElementById('modal-title').textContent = `Order Details - #${orderId}`;
+                        
+                        // Show view details, hide update form
+                        document.getElementById('view-order-details').style.display = 'block';
+                        document.getElementById('update-order-form').style.display = 'none';
+                        
+                        // Populate with generic data
+                        document.getElementById('order-id').textContent = `#${orderId}`;
+                        document.getElementById('order-date').textContent = 'Aug 2025';
+                        
+                        // Get status from the table row
+                        const row = this.closest('tr');
+                        const statusText = row.cells[4].textContent.trim();
+                        const statusElement = document.getElementById('order-status');
+                        
+                        let statusClass = '';
+                        if (statusText.includes('Completed')) {
+                            statusClass = 'status-approved';
+                        } else if (statusText.includes('Processing')) {
+                            statusClass = 'status-pending';
+                        } else if (statusText.includes('Cancelled')) {
+                            statusClass = 'status-rejected';
+                        }
+                        
+                        statusElement.innerHTML = `<span class="status-badge ${statusClass}">${statusText}</span>`;
+                        
+                        // Get agent code from the table row
+                        document.getElementById('order-agent-code').textContent = row.cells[5].textContent.trim();
+                        
+                        // Populate customer details
+                        document.getElementById('customer-name').textContent = row.cells[1].textContent.trim();
+                        document.getElementById('customer-email').textContent = 'customer@example.com';
+                        document.getElementById('customer-phone').textContent = '+254 7XX XXX XXX';
+                        document.getElementById('customer-address').textContent = 'Kenya';
+                        
+                        // Populate order items with generic data
+                        const orderItemsTable = document.getElementById('order-items');
+                        orderItemsTable.innerHTML = `
+                            <tr>
+                                <td>Agricultural Product</td>
+                                <td>KSh X,XXX</td>
+                                <td>X</td>
+                                <td>${row.cells[3].textContent.trim()}</td>
+                            </tr>
+                        `;
+                        
+                        // Populate order summary
+                        document.getElementById('order-subtotal').textContent = row.cells[3].textContent.trim();
+                        document.getElementById('order-shipping').textContent = 'KSh 0';
+                        document.getElementById('order-total').textContent = row.cells[3].textContent.trim();
+                        
+                        // Populate payment information
+                        document.getElementById('payment-method').textContent = 'M-Pesa';
+                        document.getElementById('payment-status').textContent = statusText.includes('Completed') ? 'Paid' : 'Pending';
+                        
+                        // Set data attribute for update button
+                        document.getElementById('modal-update-btn').setAttribute('data-order-id', orderId);
+                        
+                        // Show modal
+                        modal.style.display = 'block';
+                    }
+                });
+            });
+            
+            // Update order status
+            const updateButtons = document.querySelectorAll('.btn-edit');
+            
+            updateButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const orderId = this.getAttribute('data-order-id');
+                    const order = orders[orderId];
+                    
+                    // Set modal title
+                    document.getElementById('modal-title').textContent = `Update Order - ${orderId}`;
+                    
+                    // Hide view details, show update form
+                    document.getElementById('view-order-details').style.display = 'none';
+                    document.getElementById('update-order-form').style.display = 'block';
+                    
+                    // Set form data attribute
+                    document.getElementById('order-form').setAttribute('data-order-id', orderId);
+                    
+                    // Set default values based on order status
+                    if (order) {
+                        const statusSelect = document.getElementById('update-order-status');
+                        const paymentStatusSelect = document.getElementById('update-payment-status');
+                        
+                        if (order.status === 'Completed') {
+                            statusSelect.value = 'completed';
+                        } else if (order.status === 'Processing') {
+                            statusSelect.value = 'processing';
+                        } else if (order.status === 'Cancelled') {
+                            statusSelect.value = 'cancelled';
+                        }
+                        
+                        if (order.payment.status === 'Paid') {
+                            paymentStatusSelect.value = 'paid';
+                        } else if (order.payment.status === 'Pending') {
+                            paymentStatusSelect.value = 'pending';
+                        } else if (order.payment.status === 'Refunded') {
+                            paymentStatusSelect.value = 'refunded';
+                        }
+                    }
+                    
+                    // Show modal
+                    modal.style.display = 'block';
+                });
+            });
+            
+            // Modal update button
+            const modalUpdateBtn = document.getElementById('modal-update-btn');
+            
+            if (modalUpdateBtn) {
+                modalUpdateBtn.addEventListener('click', function() {
+                    const orderId = this.getAttribute('data-order-id');
+                    
+                    // Set modal title
+                    document.getElementById('modal-title').textContent = `Update Order - ${orderId}`;
+                    
+                    // Hide view details, show update form
+                    document.getElementById('view-order-details').style.display = 'none';
+                    document.getElementById('update-order-form').style.display = 'block';
+                    
+                    // Set form data attribute
+                    document.getElementById('order-form').setAttribute('data-order-id', orderId);
+                    
+                    // Set default values based on order status
+                    const order = orders[orderId];
+                    
+                    if (order) {
+                        const statusSelect = document.getElementById('update-order-status');
+                        const paymentStatusSelect = document.getElementById('update-payment-status');
+                        
+                        if (order.status === 'Completed') {
+                            statusSelect.value = 'completed';
+                        } else if (order.status === 'Processing') {
+                            statusSelect.value = 'processing';
+                        } else if (order.status === 'Cancelled') {
+                            statusSelect.value = 'cancelled';
+                        }
+                        
+                        if (order.payment.status === 'Paid') {
+                            paymentStatusSelect.value = 'paid';
+                        } else if (order.payment.status === 'Pending') {
+                            paymentStatusSelect.value = 'pending';
+                        } else if (order.payment.status === 'Refunded') {
+                            paymentStatusSelect.value = 'refunded';
+                        }
+                    }
+                });
+            }
+            
+            // Cancel update button
+            const cancelUpdateBtn = document.getElementById('cancel-update-btn');
+            
+            if (cancelUpdateBtn) {
+                cancelUpdateBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Get order ID from form
+                    const orderId = document.getElementById('order-form').getAttribute('data-order-id');
+                    
+                    // Set modal title
+                    document.getElementById('modal-title').textContent = `Order Details - #${orderId}`;
+                    
+                    // Show view details, hide update form
+                    document.getElementById('view-order-details').style.display = 'block';
+                    document.getElementById('update-order-form').style.display = 'none';
+                });
+            }
+            
+            // Order form submission
+            const orderForm = document.getElementById('order-form');
+            
+            if (orderForm) {
+                orderForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Get form values
+                    const orderId = this.getAttribute('data-order-id');
+                    const status = document.getElementById('update-order-status').value;
+                    const paymentStatus = document.getElementById('update-payment-status').value;
+                    const notes = document.getElementById('update-notes').value;
+                    
+                    // In a real implementation, you would update the database
+                    // For this demo, we'll just show a success message
+                    alert(`Order #${orderId} has been updated successfully.`);
+                    
+                    // Close modal
+                    modal.style.display = 'none';
+                });
+            }
+            
+            // Print order button
+            const printOrderBtn = document.getElementById('modal-print-btn');
+            
+            if (printOrderBtn) {
+                printOrderBtn.addEventListener('click', function() {
+                    alert('Print order functionality would be implemented here.');
+                });
+            }
+            
+            // Send WhatsApp button
+            const whatsappBtn = document.getElementById('modal-whatsapp-btn');
+            
+            if (whatsappBtn) {
+                whatsappBtn.addEventListener('click', function() {
+                    alert('Send WhatsApp message functionality would be implemented here.');
+                });
+            }
+            
+            // Apply filters button
+            const applyFiltersBtn = document.getElementById('apply-filters-btn');
+            
+            if (applyFiltersBtn) {
+                applyFiltersBtn.addEventListener('click', function() {
+                    const status = document.getElementById('status-filter').value;
+                    const date = document.getElementById('date-filter').value;
+                    const agent = document.getElementById('agent-filter').value;
+                    
+                    alert(`Filters applied: Status = ${status || 'All'}, Date = ${date || 'All Time'}, Agent = ${agent || 'All Orders'}`);
+                });
+            }
+            
+            // Search button
+            const searchBtn = document.getElementById('search-btn');
+            
+            if (searchBtn) {
+                searchBtn.addEventListener('click', function() {
+                    const search = document.getElementById('search-orders').value;
+                    
+                    alert(`Search query: ${search || 'None'}`);
+                });
+            }
+            
+            // Export orders button
+            const exportOrdersBtn = document.getElementById('export-orders-btn');
+            
+            if (exportOrdersBtn) {
+                exportOrdersBtn.addEventListener('click', function() {
+                    alert('Export orders functionality would be implemented here.');
+                });
+            }
+        });
+    </script>
+    
+    <style>
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            animation: modalFadeIn 0.3s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        .close {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #6c757d;
+            cursor: pointer;
+        }
+        
+        .close:hover {
+            color: #343a40;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        /* Order Details */
+        .order-details {
+            margin-bottom: 20px;
+        }
+        
+        .order-section {
+            margin-bottom: 30px;
+        }
+        
+        .order-section h3 {
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .order-details-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        
+        .order-details-label {
+            width: 120px;
+            font-weight: 600;
+        }
+        
+        .order-details-value {
+            flex: 1;
+        }
+        
+        .order-details-row.total {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #e9ecef;
+        }
+    </style>
+</body>
+</html>

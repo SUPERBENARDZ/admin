@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - AgribaseGroup</title>
+    <meta name="description" content="Admin login page for AgribaseGroup e-commerce website.">
+    
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="css/admin-style.css">
+    <link rel="stylesheet" href="css/admin-responsive.css">
+    
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        
+        .admin-login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .admin-login-form {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .admin-login-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .admin-login-logo img {
+            max-width: 180px;
+        }
+        
+        .admin-login-title {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .admin-login-title h1 {
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .admin-login-title p {
+            color: #6c757d;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+        }
+        
+        .btn-block {
+            width: 100%;
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+        
+        .login-footer a {
+            color: var(--primary-color);
+        }
+    </style>
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div class="admin-login-container">
+        <div class="admin-login-form">
+            <div class="admin-login-logo">
+                <img src="../images/logo.png" alt="AgribaseGroup Logo">
+            </div>
+            
+            <div class="admin-login-title">
+                <h1>Admin Login</h1>
+                <p>Enter your credentials to access the admin panel</p>
+            </div>
+            
+            <form id="admin-login-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-secondary btn-block">Login</button>
+                </div>
+            </form>
+            
+            <div class="login-footer">
+                <p>Return to <a href="../index.html">Website</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/admin.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminLoginForm = document.getElementById('admin-login-form');
+            
+            adminLoginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                
+                // Check if credentials match the admin credentials
+                if (username === 'admin' && password === 'admin24') {
+                    // Store login status in localStorage
+                    localStorage.setItem('adminLoggedIn', 'true');
+                    
+                    // Redirect to admin dashboard
+                    window.location.href = 'dashboard.html';
+                } else {
+                    // Show error message
+                    alert('Invalid username or password. Please try again.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
